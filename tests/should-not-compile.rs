@@ -1,7 +1,6 @@
 //! This is a test file that *DOES* compile and pass tests, but which should
 //! not
 
-#[macro_use]
 extern crate diesel;
 #[macro_use]
 extern crate diesel_derive_newtype;
@@ -17,7 +16,7 @@ pub struct MyId(String);
 pub struct OtherId(String);
 
 #[derive(Debug, Clone, PartialEq, Identifiable, Insertable, Queryable)]
-#[table_name = "my_entities"]
+#[diesel(table_name = my_entities)]
 pub struct MyEntity {
     id: MyId,
     val: i32,

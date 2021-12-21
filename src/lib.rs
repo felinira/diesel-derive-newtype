@@ -48,7 +48,7 @@
 //! # #[derive(DieselNewType)] // Doesn't need to be on its own line
 //! # #[derive(Debug, Hash, PartialEq, Eq)] // required by diesel
 //! # struct MyId(i64);
-//! #[derive(Debug, PartialEq, Identifiable, Queryable, Associations)]
+//! #[derive(Debug, PartialEq, Identifiable, Queryable)]
 //! struct MyItem {
 //!     id: MyId,
 //!     val: u8,
@@ -182,7 +182,7 @@ fn gen_tosql(name: &syn::Ident, wrapped_ty: &syn::Type) -> TokenStream {
             DB: diesel::backend::Backend,
             DB: diesel::sql_types::HasSqlType<ST>,
         {
-            fn to_sql<W: ::std::io::Write>(&self, out: &mut diesel::serialize::Output<W, DB>)
+            fn to_sql<'b>(&'b self, out: &mut diesel::serialize::Output<'b, '_, DB>)
             -> ::std::result::Result<diesel::serialize::IsNull, Box<::std::error::Error + Send + Sync>>
             {
                 self.0.to_sql(out)
